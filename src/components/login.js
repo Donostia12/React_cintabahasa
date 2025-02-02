@@ -1,15 +1,31 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 const Login = () => {
   // State untuk menyimpan nilai input
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   // Fungsi untuk menangani submit form
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Mencegah reload halaman
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Di sini Anda bisa menambahkan logika untuk mengirim data ke backend
+
+    try {
+      // Mengirim data login ke backend
+      const response = await axios.post("http://localhost:8000/api/login", {
+        username,
+        password,
+      });
+
+      // Menyimpan token JWT di local storage
+      localStorage.setItem("token", response.data.token);
+
+      // Redirect ke halaman yang dilindungi atau dashboard
+      window.location.href = "/dashboard";
+    } catch (error) {
+      setError("Login failed. Please check your username and password.");
+    }
   };
 
   return (
@@ -19,6 +35,7 @@ const Login = () => {
           <div className="card">
             <div className="card-body">
               <h2 className="card-title text-center">Login</h2>
+              {error && <div className="alert alert-danger">{error}</div>}
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">

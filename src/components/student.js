@@ -5,23 +5,40 @@ import {
   faEdit,
   faTrash,
   faInfoCircle,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Modal, Form } from "react-bootstrap";
 
 const Student = () => {
   const [students, setStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const limit = 20;
 
   useEffect(() => {
-    // Fetch students data from API
+    fetchStudents();
+  }, [keyword, page]);
+
+  const fetchStudents = () => {
     axios
-      .get("http://127.0.0.1:8000/api/student")
+      .get("http://127.0.0.1:8000/api/student", {
+        params: {
+          keyword,
+          page,
+          limit,
+        },
+      })
       .then((response) => {
         setStudents(response.data.students);
+        setTotal(response.data.total);
       })
       .catch((error) => {
         console.error("There was an error fetching the students!", error);
       });
-  }, []);
+  };
 
   const handleDelete = (id) => {
     // Handle delete student
@@ -33,14 +50,64 @@ const Student = () => {
     console.log("Edit student with id:", id);
   };
 
-  const handleDetails = (id) => {
-    // Handle view student details
-    console.log("View details of student with id:", id);
+  const handleDetails = (student) => {
+    // Set selected student and show modal
+    setSelectedStudent(student);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedStudent(null);
+  };
+
+  const handleSearch = (e) => {
+    setKeyword(e.target.value);
+    setPage(1); // Reset to first page on search
+  };
+
+  const handleNextPage = () => {
+    if (page * limit < total) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
   };
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Students List</h2>
+      <div className="d-flex justify-content-between mb-3">
+        <div>
+          <Button
+            variant="secondary"
+            onClick={handlePreviousPage}
+            disabled={page === 1}
+            className="me-2"
+          >
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleNextPage}
+            disabled={page * limit >= total}
+          >
+            Next
+          </Button>
+        </div>
+        <Form.Control
+          type="text"
+          placeholder="Search by name or email"
+          value={keyword}
+          onChange={handleSearch}
+          className="me-2"
+          style={{ maxWidth: "300px" }}
+        />
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -64,7 +131,7 @@ const Student = () => {
                 <Button
                   variant="info"
                   className="me-2"
-                  onClick={() => handleDetails(student.id)}
+                  onClick={() => handleDetails(student)}
                 >
                   <FontAwesomeIcon icon={faInfoCircle} /> Details
                 </Button>
@@ -86,6 +153,60 @@ const Student = () => {
           ))}
         </tbody>
       </Table>
+
+      {/* Modal for student details */}
+      {selectedStudent && (
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Student Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              <strong>ID:</strong> {selectedStudent.id}
+            </p>
+            <p>
+              <strong>Name:</strong>{" "}
+              {`${selectedStudent.first_name} ${selectedStudent.last_name}`}
+            </p>
+            <p>
+              <strong>Gender:</strong> {selectedStudent.gender}
+            </p>
+            <p>
+              <strong>Country:</strong> {selectedStudent.country}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedStudent.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {selectedStudent.phone}
+            </p>
+            <p>
+              <strong>Skype:</strong> {selectedStudent.skype}
+            </p>
+            <p>
+              <strong>Course:</strong> {selectedStudent.course}
+            </p>
+            <p>
+              <strong>Payment Preference:</strong>{" "}
+              {selectedStudent.payment_preference}
+            </p>
+            <p>
+              <strong>Note:</strong> {selectedStudent.note}
+            </p>
+            <p>
+              <strong>Created At:</strong> {selectedStudent.created_at}
+            </p>
+            <p>
+              <strong>Updated At:</strong> {selectedStudent.updated_at}
+            </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };

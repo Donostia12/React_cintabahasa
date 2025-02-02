@@ -1,0 +1,20 @@
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+  }
+  /* Sidebar Styles */
+  .sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+  }
+  
+  /* Main Content */
+  .main-content {
+    margin-left: 250px; /* Sesuai dengan lebar sidebar */
+    width: calc(100% - 250px); /* Supaya tidak ketumpuk */
+  }

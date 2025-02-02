@@ -12,7 +12,6 @@ const Login = () => {
     e.preventDefault(); // Mencegah reload halaman
 
     try {
-      // Mengirim data login ke backend
       const response = await axios.post("http://localhost:8000/api/login", {
         username,
         password,

@@ -6,6 +6,7 @@ import Login from "./components/login";
 import Dashboard from "./components/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/sidebar";
+import Student from "./components/student";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
         <div className="main-content flex-grow-1 p-4">
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route
+              path="/student"
+              element={
+                <ProtectedRoute>
+                  <Student />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/dashboard"
               element={

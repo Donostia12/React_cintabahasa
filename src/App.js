@@ -1,21 +1,27 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Login from "./components/login";
 import Dashboard from "./components/dashboard";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
-        <header className="App-header"></header>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <ProtectedRoute path="/dashboard" component={Dashboard} />
-          {/* Tambahkan rute lain di sini */}
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

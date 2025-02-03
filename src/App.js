@@ -12,7 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/sidebar";
 import EditStudent from "./components/EditStudent"; // Import EditStudent component
 import IsLogin from "./components/Islogin"; // Import the IsLogin component
-
+import ChangePassword from "./components/changepassword";
 function App() {
   return (
     <Router>
@@ -43,6 +43,14 @@ function Main() {
             element={
               <ProtectedRoute>
                 <Student />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <ChangePassword />
               </ProtectedRoute>
             }
           />

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
 const EditStudent = () => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [student, setStudent] = useState({
     firstName: "",
@@ -68,10 +70,10 @@ const EditStudent = () => {
     e.preventDefault();
     // Handle form submit to update student data
     axios
-      .put(`http://127.0.0.1:8000/api/student/update/${id}`, student)
+      .post(`http://127.0.0.1:8000/api/student/update/${id}`, student)
       .then((response) => {
-        console.log("Student updated successfully:", response.data);
         // Redirect to the dashboard or another page if needed
+        navigate("/student");
       })
       .catch((error) => {
         console.error("There was an error updating the student data!", error);

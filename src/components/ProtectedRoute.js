@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (!token) {
     console.warn("Token tidak ditemukan, mengarahkan ke /login");
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

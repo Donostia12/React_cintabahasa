@@ -11,6 +11,7 @@ import Dashboard from "./components/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/sidebar";
 import EditStudent from "./components/EditStudent"; // Import EditStudent component
+import IsLogin from "./components/Islogin"; // Import the IsLogin component
 
 function App() {
   return (
@@ -29,12 +30,27 @@ function Main() {
       {!isLoginPage && <Sidebar className="sidebar bg-dark text-white" />}
       <div className="main-content flex-grow-1 p-4">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <IsLogin>
+                <Login />
+              </IsLogin>
+            }
+          />
           <Route
             path="/student"
             element={
               <ProtectedRoute>
                 <Student />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditStudent />
               </ProtectedRoute>
             }
           />

@@ -5,16 +5,32 @@ import { Form, Button } from "react-bootstrap";
 
 const EditStudent = () => {
   const { id } = useParams();
-  const [student, setStudent] = useState(null);
+  const [student, setStudent] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "",
+    country: "",
+    email: "",
+    course: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [countries, setCountries] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/student/edit/${id}`)
       .then((response) => {
-        setStudent(response.data);
+        const studentData = response.data;
+        setStudent({
+          firstName: studentData.first_name,
+          lastName: studentData.last_name,
+          gender: studentData.gender_id,
+          country: studentData.country_id,
+          email: studentData.email,
+          course: studentData.course_id,
+        });
         setLoading(false);
       })
       .catch((error) => {
@@ -30,6 +46,14 @@ const EditStudent = () => {
       .catch((error) => {
         console.error("There was an error fetching the countries data!", error);
       });
+    axios
+      .get("http://127.0.0.1:8000/api/dashboard/courses")
+      .then((response) => {
+        setCourses(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the courses data!", error);
+      });
   }, [id]);
 
   const handleChange = (e) => {
@@ -44,7 +68,7 @@ const EditStudent = () => {
     e.preventDefault();
     // Handle form submit to update student data
     axios
-      .put(`http://127.0.0.1:8000/api/student/edit/${id}`, student)
+      .put(`http://127.0.0.1:8000/api/student/update/${id}`, student)
       .then((response) => {
         console.log("Student updated successfully:", response.data);
         // Redirect to the dashboard or another page if needed
@@ -65,8 +89,8 @@ const EditStudent = () => {
           <Form.Label>First Name</Form.Label>
           <Form.Control
             type="text"
-            name="first_name"
-            value={student.first_name}
+            name="firstName"
+            value={student.firstName}
             onChange={handleChange}
             required
           />
@@ -75,8 +99,8 @@ const EditStudent = () => {
           <Form.Label>Last Name</Form.Label>
           <Form.Control
             type="text"
-            name="last_name"
-            value={student.last_name}
+            name="lastName"
+            value={student.lastName}
             onChange={handleChange}
             required
           />
@@ -84,8 +108,8 @@ const EditStudent = () => {
         <Form.Group controlId="formGender" className="mt-3">
           <Form.Label>Gender</Form.Label>
           <Form.Select
-            name="gender_id"
-            value={student.gender_id}
+            name="gender"
+            value={student.gender}
             onChange={handleChange}
             required
           >
@@ -98,8 +122,8 @@ const EditStudent = () => {
         <Form.Group controlId="formCountry" className="mt-3">
           <Form.Label>Country</Form.Label>
           <Form.Select
-            name="country_id"
-            value={student.country_id}
+            name="country"
+            value={student.country}
             onChange={handleChange}
             required
           >
@@ -123,13 +147,19 @@ const EditStudent = () => {
         </Form.Group>
         <Form.Group controlId="formCourse" className="mt-3">
           <Form.Label>Course</Form.Label>
-          <Form.Control
-            type="number"
-            name="course_id"
-            value={student.course_id}
+          <Form.Select
+            name="course"
+            value={student.course}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select Course</option>
+            {courses.map((course) => (
+              <option key={course.id} value={course.id}>
+                {course.course}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Save Changes

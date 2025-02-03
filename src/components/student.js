@@ -8,7 +8,7 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Modal, Form } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const Student = () => {
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -17,7 +17,7 @@ const Student = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const limit = 20;
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchStudents();
   }, [keyword, page]);
@@ -46,8 +46,8 @@ const Student = () => {
   };
 
   const handleEdit = (id) => {
-    // Handle edit student
-    console.log("Edit student with id:", id);
+    // Navigate to edit student page with the student ID
+    navigate(`/student/edit/${id}`);
   };
 
   const handleDetails = (student) => {
@@ -101,7 +101,7 @@ const Student = () => {
         </div>
         <Form.Control
           type="text"
-          placeholder="Search by name or email"
+          placeholder="Search Your Student"
           value={keyword}
           onChange={handleSearch}
           className="me-2"

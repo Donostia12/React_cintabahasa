@@ -13,7 +13,12 @@ const EditStudent = () => {
     gender: "",
     country: "",
     email: "",
+    location_now: "",
     course: "",
+    phone_code: "",
+    phone: "",
+    location: "",
+    starting_date: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,8 +35,13 @@ const EditStudent = () => {
           lastName: studentData.last_name,
           gender: studentData.gender_id,
           country: studentData.country_id,
+          location_now: studentData.located_now_id,
           email: studentData.email,
           course: studentData.course_id,
+          phone_code: studentData.phone_code,
+          phone: studentData.phone,
+          location: studentData.location_id,
+          starting_date: studentData.starting_date,
         });
         setLoading(false);
       })
@@ -137,6 +147,22 @@ const EditStudent = () => {
             ))}
           </Form.Select>
         </Form.Group>
+        <Form.Group controlId="location_now" className="mt-3">
+          <Form.Label>Where Are you located now?</Form.Label>
+          <Form.Select
+            name="country"
+            value={student.location_now}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Country</option>
+            {countries.map((country) => (
+              <option key={country.id} value={country.id}>
+                {country.country_name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
         <Form.Group controlId="formEmail" className="mt-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -146,6 +172,29 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+        </Form.Group>
+        <Form.Group controlId="phone" className="mt-3">
+          <Form.Label>Phone </Form.Label>
+          <Form.Group
+            controlId="formPhone"
+            className="mt-3 d-flex align-items-center"
+          >
+            <Form.Control
+              type="text"
+              name="phone_code"
+              value={student.phone_code}
+              readOnly
+              className="me-2"
+              style={{ width: "50px" }}
+            />
+            <Form.Control
+              type="text"
+              name="phone"
+              value={student.phone}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
         </Form.Group>
         <Form.Group controlId="formCourse" className="mt-3">
           <Form.Label>Course</Form.Label>
@@ -162,6 +211,29 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+        </Form.Group>
+        <Form.Group controlId="formlocation" className="mt-3">
+          <Form.Label>Course Location</Form.Label>
+          <Form.Select
+            name="location"
+            value={student.location}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Course Location</option>
+            <option value="11">Sanur</option>
+            <option value="12">UBUD</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group controlId="formDate" className="mt-3">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            type="date"
+            name="date"
+            value={student.starting_date}
+            onChange={handleChange}
+            required
+          />
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Save Changes

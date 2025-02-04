@@ -26,15 +26,20 @@ const Dashboard = () => {
   useEffect(() => {
     // Fetch data from API
     axios
-      .get("http://cintabahasa.devdonos.pro/api/dashboard/courses")
+      .get("http://127.0.0.1:8000/api/dashboard/courses")
       .then((response) => {
         const data = response.data;
         if (Array.isArray(data)) {
-          const courses = data.map((course) => course.course);
-          const totals = data.map((course) => course.total);
+          const uniqueCourses = Array.from(
+            new Set(data.map((course) => course.course))
+          );
+          const totals = uniqueCourses.map((courseName) => {
+            const course = data.find((c) => c.course === courseName);
+            return course ? course.total : 0;
+          });
 
           setChartData({
-            labels: courses,
+            labels: uniqueCourses,
             datasets: [
               {
                 label: "Total",

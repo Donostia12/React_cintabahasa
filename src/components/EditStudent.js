@@ -352,7 +352,7 @@ const EditStudent = () => {
           <Form.Label>NEWS Latter</Form.Label>
           <Form.Select
             name="newsletter"
-            value={student.newsletter ?? "0"} // Jika null, set ke "0"
+            value={student.newsletter} // Jika null, set ke "0"
             onChange={handleChange}
             required
           >

@@ -166,7 +166,10 @@ const Student = () => {
               <strong>Gender:</strong> {selectedStudent.gender}
             </p>
             <p>
-              <strong>Country:</strong> {selectedStudent.country}
+              <strong>Nationality:</strong> {selectedStudent.country}
+            </p>
+            <p>
+              <strong>Where Are You Now:</strong> {selectedStudent.location_now}
             </p>
             <p>
               <strong>Email:</strong> {selectedStudent.email}
@@ -174,11 +177,13 @@ const Student = () => {
             <p>
               <strong>Phone:</strong> {selectedStudent.phone}
             </p>
-            <p>
-              <strong>Skype:</strong> {selectedStudent.skype}
-            </p>
+
             <p>
               <strong>Course:</strong> {selectedStudent.course}
+            </p>
+
+            <p>
+              <strong>Location:</strong> {selectedStudent.location}
             </p>
             <p>
               <strong>Payment Preference:</strong>{" "}

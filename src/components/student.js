@@ -183,20 +183,29 @@ const Student = () => {
             </p>
 
             <p>
-              <strong>Location:</strong> {selectedStudent.location}
+              <strong>Location:</strong> {selectedStudent.course_location}
             </p>
             <p>
-              <strong>Payment Preference:</strong>{" "}
+              <strong>Starting At :</strong> {selectedStudent.starting_at}
+            </p>
+            <p>
+              <strong>Payment Preference:</strong>
               {selectedStudent.payment_preference}
             </p>
             <p>
+              <strong>referrer : </strong> {selectedStudent.referrer}
+            </p>
+            <p>
+              <strong>News Letter :</strong>
+              {selectedStudent.newsletter === 1 ? "Yes" : "No"}
+            </p>
+
+            <p>
+              <strong> why would you like to learn with us? :</strong>{" "}
+              {selectedStudent.reason}
+            </p>
+            <p>
               <strong>Note:</strong> {selectedStudent.note}
-            </p>
-            <p>
-              <strong>Created At:</strong> {selectedStudent.created_at}
-            </p>
-            <p>
-              <strong>Updated At:</strong> {selectedStudent.updated_at}
             </p>
           </Modal.Body>
           <Modal.Footer>

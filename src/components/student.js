@@ -142,12 +142,6 @@ const Student = () => {
                 >
                   <FontAwesomeIcon icon={faEdit} /> Edit
                 </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => handleDelete(student.id)}
-                >
-                  <FontAwesomeIcon icon={faTrash} /> Delete
-                </Button>
               </td>
             </tr>
           ))}

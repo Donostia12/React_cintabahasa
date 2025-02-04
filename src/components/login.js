@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   // State untuk menyimpan nilai input
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +26,7 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
 
       // Redirect ke halaman yang dilindungi atau dashboard
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (error) {
       setError("Login failed. Please check your username and password.");
     }

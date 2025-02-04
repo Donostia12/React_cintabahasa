@@ -10,6 +10,8 @@ const EditStudent = () => {
   const [student, setStudent] = useState({
     firstName: "",
     lastName: "",
+    reason: "",
+    questions: "",
     gender: "",
     country: "",
     email: "",
@@ -47,8 +49,10 @@ const EditStudent = () => {
           phone: studentData.phone,
           location: studentData.location_id,
           starting_date: studentData.starting_date,
+          reason: studentData.reason,
           payment_preference: studentData.payment_preference_id,
           referrer: studentData.referrer_id,
+          questions: studentData.message,
         });
         setLoading(false);
       })
@@ -297,6 +301,26 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+        </Form.Group>
+        <Form.Group controlId="formreason" className="mt-3">
+          <Form.Label>Why You like to learn with Us</Form.Label>
+          <Form.Control
+            type="text"
+            name="reason"
+            value={student.reason}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formquestions" className="mt-3">
+          <Form.Label>Questions</Form.Label>
+          <Form.Control
+            type="text"
+            name="reason"
+            value={student.questions}
+            onChange={handleChange}
+            required
+          />
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Save Changes

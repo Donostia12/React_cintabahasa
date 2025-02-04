@@ -22,7 +22,7 @@ const EditStudent = () => {
 
   useEffect(() => {
     axios
-      .get(`https://cintabahasa.devdonos.pro/api/student/edit/${id}`)
+      .get(`http://127.0.0.1:8000/api/student/edit/${id}`)
       .then((response) => {
         const studentData = response.data;
         setStudent({
@@ -41,7 +41,7 @@ const EditStudent = () => {
         setLoading(false);
       });
     axios
-      .get("https://cintabahasa.devdonos.pro/api/country")
+      .get("http://127.0.0.1:8000/api/country")
       .then((response) => {
         setCountries(response.data);
       })
@@ -49,7 +49,7 @@ const EditStudent = () => {
         console.error("There was an error fetching the countries data!", error);
       });
     axios
-      .get("https://cintabahasa.devdonos.pro/api/dashboard/courses")
+      .get("http://127.0.0.1:8000/api/dashboard/courses")
       .then((response) => {
         setCourses(response.data);
       })
@@ -70,10 +70,7 @@ const EditStudent = () => {
     e.preventDefault();
     // Handle form submit to update student data
     axios
-      .post(
-        `https://cintabahasa.devdonos.pro/api/student/update/${id}`,
-        student
-      )
+      .post(`http://127.0.0.1:8000/api/student/update/${id}`, student)
       .then((response) => {
         // Redirect to the dashboard or another page if needed
         navigate("/student");

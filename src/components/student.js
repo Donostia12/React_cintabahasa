@@ -24,7 +24,7 @@ const Student = () => {
 
   const fetchStudents = () => {
     axios
-      .get("https://cintabahasa.devdonos.pro/api/student", {
+      .get("http://127.0.0.1:8000/api/student", {
         params: {
           keyword,
           page,

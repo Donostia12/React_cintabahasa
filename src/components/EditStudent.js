@@ -19,14 +19,16 @@ const EditStudent = () => {
     phone: "",
     location: "",
     starting_date: "",
-    payment_preference: "", // updated name to be consistent
+    payment_preference: "",
+    referrer: "", // updated name to be consistent
   });
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [countries, setCountries] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [preferences, setPreferences] = useState([]); // updated variable name to be consistent
+  const [preferences, setPreferences] = useState([]);
+  const [referrers, setreferrer] = useState([]); // updated variable name to be consistent] // updated variable name to be consistent
 
   useEffect(() => {
     axios
@@ -45,7 +47,8 @@ const EditStudent = () => {
           phone: studentData.phone,
           location: studentData.location_id,
           starting_date: studentData.starting_date,
-          payment_preference: studentData.payment_preference_id, // updated name
+          payment_preference: studentData.payment_preference_id,
+          referrer: studentData.referrer_id,
         });
         setLoading(false);
       })
@@ -78,6 +81,17 @@ const EditStudent = () => {
       .then((response) => {
         console.log(response.data);
         setPreferences(response.data); // updated variable name to be consistent
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error fetching the preferences data!",
+          error
+        ); // updated variable name to be consistent
+      });
+    axios
+      .get("http://127.0.0.1:8000/api/dashboard/referrer-json") // updated endpoint
+      .then((response) => {
+        setreferrer(response.data); // updated variable name to be consistent
       })
       .catch((error) => {
         console.error(
@@ -264,6 +278,22 @@ const EditStudent = () => {
             {preferences.map((preference) => (
               <option key={preference.id} value={preference.id}>
                 {preference.term}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <Form.Group controlId="referrer" className="mt-3">
+          <Form.Label>referrer</Form.Label>
+          <Form.Select
+            name="referrer"
+            value={student.referrer}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select payments</option>
+            {referrers.map((referrer) => (
+              <option key={referrer.id} value={referrer.id}>
+                {referrer.term}
               </option>
             ))}
           </Form.Select>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 
 const EditStudent = () => {
   const navigate = useNavigate();
@@ -28,10 +28,11 @@ const EditStudent = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formErrors, setFormErrors] = useState({});
   const [countries, setCountries] = useState([]);
   const [courses, setCourses] = useState([]);
   const [preferences, setPreferences] = useState([]);
-  const [referrers, setreferrer] = useState([]); // updated variable name to be consistent] // updated variable name to be consistent
+  const [referrers, setreferrer] = useState([]); // updated variable name to be consistent
 
   useEffect(() => {
     axios
@@ -124,6 +125,13 @@ const EditStudent = () => {
       })
       .catch((error) => {
         console.error("There was an error updating the student data!", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          setFormErrors(error.response.data.errors);
+        }
       });
   };
 
@@ -143,6 +151,9 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+          {formErrors.firstName && (
+            <Alert variant="danger">{formErrors.firstName[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formLastName" className="mt-3">
           <Form.Label>Last Name</Form.Label>
@@ -153,6 +164,9 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+          {formErrors.lastName && (
+            <Alert variant="danger">{formErrors.lastName[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formGender" className="mt-3">
           <Form.Label>Gender</Form.Label>
@@ -167,6 +181,9 @@ const EditStudent = () => {
             <option value="14">Female</option>
             <option value="15">Non-Binary</option>
           </Form.Select>
+          {formErrors.gender && (
+            <Alert variant="danger">{formErrors.gender[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formCountry" className="mt-3">
           <Form.Label>Country</Form.Label>
@@ -183,6 +200,9 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+          {formErrors.country && (
+            <Alert variant="danger">{formErrors.country[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="location_now" className="mt-3">
           <Form.Label>Where Are you located now?</Form.Label>
@@ -199,6 +219,9 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+          {formErrors.location_now && (
+            <Alert variant="danger">{formErrors.location_now[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formEmail" className="mt-3">
           <Form.Label>Email</Form.Label>
@@ -209,6 +232,9 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+          {formErrors.email && (
+            <Alert variant="danger">{formErrors.email[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="phone" className="mt-3">
           <Form.Label>Phone </Form.Label>
@@ -232,6 +258,9 @@ const EditStudent = () => {
               required
             />
           </Form.Group>
+          {formErrors.phone && (
+            <Alert variant="danger">{formErrors.phone[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formCourse" className="mt-3">
           <Form.Label>Course</Form.Label>
@@ -248,6 +277,9 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+          {formErrors.course && (
+            <Alert variant="danger">{formErrors.course[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formlocation" className="mt-3">
           <Form.Label>Course Location</Form.Label>
@@ -261,6 +293,9 @@ const EditStudent = () => {
             <option value="11">Sanur</option>
             <option value="12">UBUD</option>
           </Form.Select>
+          {formErrors.location && (
+            <Alert variant="danger">{formErrors.location[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formDate" className="mt-3">
           <Form.Label>Date</Form.Label>
@@ -271,6 +306,9 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+          {formErrors.starting_date && (
+            <Alert variant="danger">{formErrors.starting_date[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="payments" className="mt-3">
           <Form.Label>Payment preference</Form.Label>
@@ -287,28 +325,34 @@ const EditStudent = () => {
               </option>
             ))}
           </Form.Select>
+          {formErrors.payment_preference && (
+            <Alert variant="danger">{formErrors.payment_preference[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="referrer" className="mt-3">
-          <Form.Label>referrer</Form.Label>
+          <Form.Label>Referrer</Form.Label>
           <Form.Select
             name="referrer"
             value={student.referrer}
             onChange={handleChange}
             required
           >
-            <option value="">Select payments</option>
+            <option value="">Select referrer</option>
             {referrers.map((referrer) => (
               <option key={referrer.id} value={referrer.id}>
                 {referrer.term}
               </option>
             ))}
           </Form.Select>
+          {formErrors.referrer && (
+            <Alert variant="danger">{formErrors.referrer[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formletter" className="mt-3">
           <Form.Label>NEWS Latter</Form.Label>
           <Form.Select
             name="newsletter"
-            value={student.NewsLatter ?? "0"} // Jika null, set ke "0"
+            value={student.newsletter ?? "0"} // Jika null, set ke "0"
             onChange={handleChange}
             required
           >
@@ -316,6 +360,9 @@ const EditStudent = () => {
             <option value="0">No</option>
             <option value="1">Yes</option>
           </Form.Select>
+          {formErrors.newsletter && (
+            <Alert variant="danger">{formErrors.newsletter[0]}</Alert>
+          )}
         </Form.Group>
 
         <Form.Group controlId="formreason" className="mt-3">
@@ -327,16 +374,22 @@ const EditStudent = () => {
             onChange={handleChange}
             required
           />
+          {formErrors.reason && (
+            <Alert variant="danger">{formErrors.reason[0]}</Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formquestions" className="mt-3">
           <Form.Label>Questions</Form.Label>
           <Form.Control
             type="text"
-            name="reason"
+            name="questions"
             value={student.questions}
             onChange={handleChange}
             required
           />
+          {formErrors.questions && (
+            <Alert variant="danger">{formErrors.questions[0]}</Alert>
+          )}
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Save Changes

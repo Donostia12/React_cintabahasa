@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import Login from "./components/login";
 import Student from "./components/student";
@@ -13,6 +14,7 @@ import Sidebar from "./components/sidebar";
 import EditStudent from "./components/EditStudent"; // Import EditStudent component
 import IsLogin from "./components/Islogin"; // Import the IsLogin component
 import ChangePassword from "./components/changepassword";
+import Logout from "./components/logout";
 function App() {
   return (
     <Router>
@@ -71,7 +73,15 @@ function Main() {
             }
           />
           {/* Default route */}
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route
+            path="/logout"
+            element={
+              <ProtectedRoute>
+                <Logout />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </div>

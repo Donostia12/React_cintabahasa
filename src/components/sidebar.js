@@ -5,8 +5,10 @@ import {
   faTachometerAlt,
   faUser,
   faCog,
+  faAnchorLock,
 } from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
+import LogoutLink from "./logout";
 function Sidebar() {
   return (
     <div
@@ -33,6 +35,7 @@ function Sidebar() {
             Settings
           </Link>
         </li>
+        <LogoutLink />
       </ul>
     </div>
   );

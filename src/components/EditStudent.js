@@ -5,8 +5,8 @@ import { Form, Button } from "react-bootstrap";
 
 const EditStudent = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
+
   const [student, setStudent] = useState({
     firstName: "",
     lastName: "",
@@ -19,11 +19,14 @@ const EditStudent = () => {
     phone: "",
     location: "",
     starting_date: "",
+    payment_preference: "", // updated name to be consistent
   });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [countries, setCountries] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [preferences, setPreferences] = useState([]); // updated variable name to be consistent
 
   useEffect(() => {
     axios
@@ -42,6 +45,7 @@ const EditStudent = () => {
           phone: studentData.phone,
           location: studentData.location_id,
           starting_date: studentData.starting_date,
+          payment_preference: studentData.payment_preference_id, // updated name
         });
         setLoading(false);
       })
@@ -50,6 +54,7 @@ const EditStudent = () => {
         setError("Failed to fetch student data.");
         setLoading(false);
       });
+
     axios
       .get("http://127.0.0.1:8000/api/country")
       .then((response) => {
@@ -58,6 +63,7 @@ const EditStudent = () => {
       .catch((error) => {
         console.error("There was an error fetching the countries data!", error);
       });
+
     axios
       .get("http://127.0.0.1:8000/api/dashboard/courses")
       .then((response) => {
@@ -65,6 +71,19 @@ const EditStudent = () => {
       })
       .catch((error) => {
         console.error("There was an error fetching the courses data!", error);
+      });
+
+    axios
+      .get("http://127.0.0.1:8000/api/dashboard/preference") // updated endpoint
+      .then((response) => {
+        console.log(response.data);
+        setPreferences(response.data); // updated variable name to be consistent
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error fetching the preferences data!",
+          error
+        ); // updated variable name to be consistent
       });
   }, [id]);
 
@@ -78,11 +97,9 @@ const EditStudent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submit to update student data
     axios
       .post(`http://127.0.0.1:8000/api/student/update/${id}`, student)
       .then((response) => {
-        // Redirect to the dashboard or another page if needed
         navigate("/student");
       })
       .catch((error) => {
@@ -150,7 +167,7 @@ const EditStudent = () => {
         <Form.Group controlId="location_now" className="mt-3">
           <Form.Label>Where Are you located now?</Form.Label>
           <Form.Select
-            name="country"
+            name="location_now"
             value={student.location_now}
             onChange={handleChange}
             required
@@ -229,11 +246,27 @@ const EditStudent = () => {
           <Form.Label>Date</Form.Label>
           <Form.Control
             type="date"
-            name="date"
+            name="starting_date" // updated name to match state
             value={student.starting_date}
             onChange={handleChange}
             required
           />
+        </Form.Group>
+        <Form.Group controlId="payments" className="mt-3">
+          <Form.Label>Payment preference</Form.Label>
+          <Form.Select
+            name="payment_preference" // updated name to match state
+            value={student.payment_preference} // updated value to match state
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select payments</option>
+            {preferences.map((preference) => (
+              <option key={preference.id} value={preference.id}>
+                {preference.term}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Save Changes

@@ -21,7 +21,7 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     // Fetch data from API
@@ -29,21 +29,25 @@ const Dashboard = () => {
       .get("http://cintabahasa.devdonos.pro/api/dashboard/courses")
       .then((response) => {
         const data = response.data;
-        const courses = data.map((course) => course.course);
-        const totals = data.map((course) => course.total);
+        if (Array.isArray(data)) {
+          const courses = data.map((course) => course.course);
+          const totals = data.map((course) => course.total);
 
-        setChartData({
-          labels: courses,
-          datasets: [
-            {
-              label: "Total",
-              data: totals,
-              backgroundColor: "rgba(75,192,192,0.4)",
-              borderColor: "rgba(75,192,192,1)",
-              borderWidth: 1,
-            },
-          ],
-        });
+          setChartData({
+            labels: courses,
+            datasets: [
+              {
+                label: "Total",
+                data: totals,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderWidth: 1,
+              },
+            ],
+          });
+        } else {
+          console.error("Unexpected data format:", data);
+        }
       })
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
@@ -55,21 +59,25 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <p>Welcome to Cinta Bahasa</p>
       <div>
-        <Bar
-          data={chartData}
-          options={{
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
+        {chartData ? (
+          <Bar
+            data={chartData}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Course Statistics",
+                },
               },
-              title: {
-                display: true,
-                text: "Course Statistics",
-              },
-            },
-          }}
-        />
+            }}
+          />
+        ) : (
+          <p>Loading chart data...</p>
+        )}
       </div>
     </div>
   );

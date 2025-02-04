@@ -20,6 +20,7 @@ const EditStudent = () => {
     phone_code: "",
     phone: "",
     location: "",
+    NewsLatter: "",
     starting_date: "",
     payment_preference: "",
     referrer: "", // updated name to be consistent
@@ -53,6 +54,7 @@ const EditStudent = () => {
           payment_preference: studentData.payment_preference_id,
           referrer: studentData.referrer_id,
           questions: studentData.message,
+          NewsLatter: studentData.newsletter,
         });
         setLoading(false);
       })
@@ -302,6 +304,20 @@ const EditStudent = () => {
             ))}
           </Form.Select>
         </Form.Group>
+        <Form.Group controlId="formletter" className="mt-3">
+          <Form.Label>NEWS Latter</Form.Label>
+          <Form.Select
+            name="newsletter"
+            value={student.NewsLatter ?? "0"} // Jika null, set ke "0"
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select News Letter</option>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </Form.Select>
+        </Form.Group>
+
         <Form.Group controlId="formreason" className="mt-3">
           <Form.Label>Why You like to learn with Us</Form.Label>
           <Form.Control

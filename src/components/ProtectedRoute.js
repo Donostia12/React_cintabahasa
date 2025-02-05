@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
 
       try {
         const response = await axios.get(
-          "https://cintabahasa.devdonos.pro/api/protected-endpoint",
+          "https://api.cintabahasa.com//api/protected-endpoint",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

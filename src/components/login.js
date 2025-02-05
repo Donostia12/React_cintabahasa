@@ -15,7 +15,7 @@ const Login = () => {
     try {
       // Mengirim data login ke backend
       const response = await axios.post(
-        "https://cintabahasa.devdonos.pro/api/login",
+        "https://api.cintabahasa.com//api/login",
         {
           username,
           password,

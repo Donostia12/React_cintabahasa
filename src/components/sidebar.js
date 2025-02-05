@@ -26,7 +26,7 @@ function Sidebar() {
         <li className="nav-item">
           <Link to="/student" className="nav-link text-white">
             <FontAwesomeIcon icon={faUser} className="me-2" />
-            Student
+            Students
           </Link>
         </li>
         <li className="nav-item">

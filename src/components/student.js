@@ -197,7 +197,7 @@ const Student = () => {
             </p>
             <p>
               <strong>News Letter :</strong>
-              {selectedStudent.newsletter === 1 ? "Yes" : "No"}
+              {selectedStudent.newsletter === "1" ? "yes" : "no"}
             </p>
 
             <p>

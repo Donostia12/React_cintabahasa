@@ -36,7 +36,7 @@ const EditStudent = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/student/edit/${id}`)
+      .get(`https://cintabahasa.devdonos.pro/api/student/edit/${id}`)
       .then((response) => {
         const studentData = response.data;
         setStudent({
@@ -66,7 +66,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/country")
+      .get("https://cintabahasa.devdonos.pro/api/country")
       .then((response) => {
         setCountries(response.data);
       })
@@ -75,7 +75,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/dashboard/courses")
+      .get("https://cintabahasa.devdonos.pro/api/dashboard/courses")
       .then((response) => {
         setCourses(response.data);
       })
@@ -84,7 +84,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/dashboard/preference") // updated endpoint
+      .get("https://cintabahasa.devdonos.pro/api/dashboard/preference") // updated endpoint
       .then((response) => {
         console.log(response.data);
         setPreferences(response.data); // updated variable name to be consistent
@@ -96,7 +96,7 @@ const EditStudent = () => {
         ); // updated variable name to be consistent
       });
     axios
-      .get("http://127.0.0.1:8000/api/dashboard/referrer-json") // updated endpoint
+      .get("https://cintabahasa.devdonos.pro/api/dashboard/referrer-json") // updated endpoint
       .then((response) => {
         setreferrer(response.data); // updated variable name to be consistent
       })
@@ -119,7 +119,10 @@ const EditStudent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`http://127.0.0.1:8000/api/student/update/${id}`, student)
+      .post(
+        `https://cintabahasa.devdonos.pro/api/student/update/${id}`,
+        student
+      )
       .then((response) => {
         navigate("/student");
       })

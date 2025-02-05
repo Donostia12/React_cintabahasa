@@ -29,7 +29,7 @@ const ChangePassword = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/change-password",
+        "https://cintabahasa.devdonos.pro/api/change-password",
         {
           oldPassword: formData.oldPassword,
           newPassword: formData.newPassword,

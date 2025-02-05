@@ -14,10 +14,13 @@ const Login = () => {
 
     try {
       // Mengirim data login ke backend
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://cintabahasa.devdonos.pro/api/login",
+        {
+          username,
+          password,
+        }
+      );
 
       // Menyimpan token JWT di local storage
       localStorage.setItem("token", response.data.token);

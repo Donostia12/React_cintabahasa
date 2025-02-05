@@ -26,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Fetch data from API
     axios
-      .get("https://api.cintabahasa.com//api/dashboard/courses")
+      .get("https://api.cintabahasa.com/api/dashboard/courses")
       .then((response) => {
         const data = response.data;
         if (Array.isArray(data)) {

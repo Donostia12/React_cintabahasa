@@ -36,7 +36,7 @@ const EditStudent = () => {
 
   useEffect(() => {
     axios
-      .get(`https://api.cintabahasa.com//api/student/edit/${id}`)
+      .get(`https://api.cintabahasa.com/api/student/edit/${id}`)
       .then((response) => {
         const studentData = response.data;
         setStudent({
@@ -66,7 +66,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("https://api.cintabahasa.com//api/country")
+      .get("https://api.cintabahasa.com/api/country")
       .then((response) => {
         setCountries(response.data);
       })
@@ -75,7 +75,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("https://api.cintabahasa.com//api/student/courses")
+      .get("https://api.cintabahasa.com/api/student/courses")
       .then((response) => {
         setCourses(response.data);
       })
@@ -84,7 +84,7 @@ const EditStudent = () => {
       });
 
     axios
-      .get("https://api.cintabahasa.com//api/dashboard/preference") // updated endpoint
+      .get("https://api.cintabahasa.com/api/dashboard/preference") // updated endpoint
       .then((response) => {
         console.log(response.data);
         setPreferences(response.data); // updated variable name to be consistent
@@ -96,7 +96,7 @@ const EditStudent = () => {
         ); // updated variable name to be consistent
       });
     axios
-      .get("https://api.cintabahasa.com//api/dashboard/referrer-json") // updated endpoint
+      .get("https://api.cintabahasa.com/api/dashboard/referrer-json") // updated endpoint
       .then((response) => {
         setreferrer(response.data); // updated variable name to be consistent
       })
@@ -119,7 +119,7 @@ const EditStudent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`https://api.cintabahasa.com//api/student/update/${id}`, student)
+      .post(`https://api.cintabahasa.com/api/student/update/${id}`, student)
       .then((response) => {
         navigate("/student");
       })

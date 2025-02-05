@@ -24,7 +24,7 @@ const Student = () => {
 
   const fetchStudents = () => {
     axios
-      .get("https://api.cintabahasa.com//api/student", {
+      .get("https://api.cintabahasa.com/api/student", {
         params: {
           keyword,
           page,
